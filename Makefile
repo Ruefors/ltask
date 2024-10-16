@@ -1,14 +1,15 @@
+#zh-cn
 CFLAGS=-g -Wall
 # CFLAGS+=-DDEBUGLOG
 
-LUAINC?=`pkgconf lua --cflags`
+LUAINC?=$(shell pkgconf lua --cflags)
+LUALIB?=$(shell pkgconf lua --libs)
 
 ifeq ($(OS),Windows_NT)
   LIBS=-lwinmm -lws2_32 -D_WIN32_WINNT=0x0601 -lntdll
   SHARED=--shared
   SO=dll
-  LUALIB?=`pkgconf lua --libs`
-else ifeq ($(OS), Darwin)
+else ifeq ($(OS),Darwin)
   SO=so
   SHARED= -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup
 else
@@ -17,7 +18,7 @@ else
   LIBS=-lpthread
 endif
 
-all : ltask.$(SO)
+all: ltask.$(SO)
 
 SRCS=\
  src/ltask.c \
@@ -34,13 +35,11 @@ SRCS=\
  src/debuglog.c \
  src/threadsig.c
 
-ltask.$(SO) : $(SRCS)
+ltask.$(SO): $(SRCS)
 	$(CC) $(CFLAGS) $(SHARED) $(LUAINC) -Isrc -o $@ $^ $(LUALIB) $(LIBS)
 
-seri.$(SO) : src/lua-seri.c
+seri.$(SO): src/lua-seri.c
 	$(CC) $(CFLAGS) $(SHARED) $(LUAINC) -Isrc -o $@ $^ $(LUALIB) -D TEST_SERI
 
-clean :
+clean:
 	rm -rf *.$(SO)
-
-

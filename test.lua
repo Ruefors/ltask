@@ -1,24 +1,18 @@
+package.cpath = package.cpath .. ";./clib/?.so"
 local start = require "test.start"
 start {
     core = {
         debuglog = "=", -- stdout
     },
-    service_path = "service/?.lua;test/?.lua",
+    service_path = "service/?.lua;test/?.lua;demo/?.lua",
     bootstrap = {
         {
-            name = "timer",
+            name = "demo0",
             unique = true,
         },
         {
-            name = "logger",
+            name = "demo1",
             unique = true,
-        },
-        {
-            name = "sockevent",
-            unique = true,
-        },
-        {
-            name = "bootstrap",
-        },
+        }
     },
 }

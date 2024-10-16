@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "worker.h": "c",
+        "config.h": "c",
+        "lauxlib.h": "c",
+        "lua.h": "c",
+        "assert.h": "c",
+        "sockevent.h": "c",
+        "sysinfo.h": "c",
+        "stdio.h": "c"
+    }
+}
